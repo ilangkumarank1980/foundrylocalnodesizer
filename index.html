@@ -3,6 +3,55 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Paste the Script Block HERE inside the head -->
+    <script>
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+
+            document.getElementById('tab-' + tabId).classList.add('active');
+            document.getElementById('btn-' + tabId).classList.add('active');
+        }
+
+        function calculateMetrics() {
+            const p = parseFloat(document.getElementById('paramCount').value);
+            const b = parseFloat(document.getElementById('precisionType').value);
+            const c = parseInt(document.getElementById('contextSize').value);
+            const u = parseInt(document.getElementById('userCount').value);
+            const maxGpuVram = parseFloat(document.getElementById('gpuType').value);
+
+            const weightsVram = p * b;
+            const kvCacheVram = (u * c * 0.000001); 
+            const subtotal = weightsVram + kvCacheVram;
+            const overheadVram = subtotal * 0.15;
+            const totalVramNeeded = subtotal + overheadVram;
+
+            document.getElementById('outWeights').innerText = weightsVram.toFixed(2) + " GB";
+            document.getElementById('outCache').innerText = kvCacheVram.toFixed(2) + " GB";
+            document.getElementById('outOverhead').innerText = overheadVram.toFixed(2) + " GB";
+            document.getElementById('outTotalVRAM').innerText = totalVramNeeded.toFixed(2) + " GB";
+
+            document.querySelectorAll('.calc-p').forEach(el => el.innerText = p);
+            document.querySelectorAll('.calc-b').forEach(el => el.innerText = b);
+            document.querySelectorAll('.calc-w').forEach(el => el.innerText = weightsVram.toFixed(2));
+            document.querySelectorAll('.calc-u').forEach(el => el.innerText = u);
+            document.querySelectorAll('.calc-c').forEach(el => el.innerText = kvCacheVram.toFixed(2));
+
+            const statusEl = document.getElementById('hardwareStatus');
+            if(totalVramNeeded <= maxGpuVram) {
+                statusEl.className = "p-4 rounded-lg mb-8 font-medium text-sm bg-green-50 border border-green-200 text-green-800";
+                statusEl.innerHTML = `✔ Hardware Sizing Success: Your allocated environment target fits neatly inside the chosen GPU hardware profile container threshold bounds (\${totalVramNeeded.toFixed(2)} GB needed vs. \${maxGpuVram} GB hardware envelope).`;
+            } else {
+                statusEl.className = "p-4 rounded-lg mb-8 font-medium text-sm bg-red-50 border border-red-200 text-red-800";
+                statusEl.innerHTML = `⚠️ Sizing Headroom Violation: Calculated target profile footprint exceeding physical limits (\${totalVramNeeded.toFixed(2)} GB needed vs. \${maxGpuVram} GB platform capacity). Apply model quantization or provision a larger hardware node matrix tier layout plan to sustain operational stability.`;
+            }
+        }
+
+        // Make sure to load the initial numbers after the page structures are ready
+        window.addEventListener('DOMContentLoaded', () => {
+            calculateMetrics();
+        });
+    </script>
     <title>LLM Compute Sizing Calculator - Azure Local</title>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <style>
