@@ -105,7 +105,9 @@
                 
                     <div>
                         <label class="block text-sm font-medium text-gray-700">Max Context Window Length (Tokens)</label>
-                        <p class="text-[11px] text-gray-500 mb-1 leading-tight"><strong>What it means:</strong> The total memory capacity of an active chat. This dictates the maximum volume of conversation history plus external documentation (RAG payloads) the agent can "remember" and process at once.</p>
+                        <p class="text-[11px] text-gray-500 mb-1 leading-tight"><strong>What it means:</strong> The total memory capacity of an active chat. This dictates the maximum volume of conversation history plus external documentation (RAG payloads) the agent can "remember" and process at once.
+                        <span class="block mt-0.5 text-gray-400"><em>Example: An 8,000 token context window allows the agent to read or hold roughly 6,000 words (about 12-15 single-spaced pages of text) in a single request loop.</em></span>
+                        </p>
                         <input type="number" id="contextSize" value="8000" step="1000" class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none">
                     </div>
                 
