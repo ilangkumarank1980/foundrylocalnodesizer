@@ -87,32 +87,37 @@
                 <!-- Left Side: Inputs -->
                 <div class="space-y-4">
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">Target Model Parameters (Billions)</label>
+                        <label class="block text-sm font-medium text-gray-700">Target Model Parameters (Billions)</label>
+                        <p class="text-[11px] text-gray-500 mb-1 leading-tight"><strong>What it means:</strong> The baseline "brain size" of the AI model. Larger values offer stronger reasoning capacity but demand dramatically higher base VRAM.</p>
                         <input type="number" id="paramCount" value="8" min="1" class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none">
                         <p class="text-xs text-gray-400 mt-1">Example: Llama 3 8B = 8, Llama 3 70B = 70</p>
                     </div>
-
+                
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">Numerical Precision Type</label>
+                        <label class="block text-sm font-medium text-gray-700">Numerical Precision Type</label>
+                        <p class="text-[11px] text-gray-500 mb-1 leading-tight"><strong>What it means:</strong> The compression scale of the model files. Unquantized (FP16) runs at maximum native accuracy, while Quantization (INT4/8) heavily shrinks file sizes to save massive hardware costs with minimal quality drop.</p>
                         <select id="precisionType" class="w-full px-3 py-2 border rounded-lg bg-white outline-none focus:ring-2 focus:ring-blue-500">
                             <option value="2">FP16 / BF16 (Unquantized - 2 Bytes)</option>
                             <option value="1">INT8 (Quantized - 1 Byte)</option>
                             <option value="0.5" selected>INT4 (Highly Quantized - 0.5 Bytes)</option>
                         </select>
                     </div>
-
+                
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">Max Context Window Length (Tokens)</label>
+                        <label class="block text-sm font-medium text-gray-700">Max Context Window Length (Tokens)</label>
+                        <p class="text-[11px] text-gray-500 mb-1 leading-tight"><strong>What it means:</strong> The total memory capacity of an active chat. This dictates the maximum volume of conversation history plus external documentation (RAG payloads) the agent can "remember" and process at once.</p>
                         <input type="number" id="contextSize" value="8000" step="1000" class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none">
                     </div>
-
+                
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">Target Max Concurrent Users</label>
+                        <label class="block text-sm font-medium text-gray-700">Target Max Concurrent Users</label>
+                        <p class="text-[11px] text-gray-500 mb-1 leading-tight"><strong>What it means:</strong> Peak volume of distinct personnel actively generating inference chat tokens or driving agent loops at the exact same millisecond. Each concurrent session creates a dedicated isolated memory pool.</p>
                         <input type="number" id="userCount" value="50" min="1" class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none">
                     </div>
-
+                
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">Target Azure Local GPU Card</label>
+                        <label class="block text-sm font-medium text-gray-700">Target Azure Local GPU Card</label>
+                        <p class="text-[11px] text-gray-500 mb-1 leading-tight"><strong>What it means:</strong> The physical enterprise graphics accelerator installed in your localized bare-metal chassis node environment to handle mathematical parallel processing.</p>
                         <select id="gpuType" class="w-full px-3 py-2 border rounded-lg bg-white outline-none focus:ring-2 focus:ring-blue-500">
                             <option value="48" selected>NVIDIA RTX Pro 6000 Ada / Blackwell Server Edition (48GB VRAM)</option>
                             <option value="24">NVIDIA L4 (24GB VRAM)</option>
@@ -120,7 +125,7 @@
                             <option value="96">Dual RTX 6000 Array (96GB VRAM)</option>
                         </select>
                     </div>
-
+                
                     <button type="button" onclick="calculateMetrics(); switchTab('calculations');" class="w-full mt-6 bg-blue-600 hover:bg-blue-700 text-white font-medium py-2.5 px-4 rounded-lg transition">
                             Process Sizing Blueprint
                     </button>
